@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JS Bin</title>
+    <style>
+        .body
+        {
+            font-family:Calibri;
+        }
+        .num
+        {
+            margin: 5px;
+            min-width: 70px;
+            background-color: red;
+            float: left;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid silver;
+            background-color: #4cff00;
+        }
+
+        .swapped
+        {
+            margin: 5px;
+            min-width: 70px;
+            background-color: red;
+            float: left;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid silver;
+            background-color: #f00;
+        }
+
+        .mainArray
+        {
+            float: none;
+            clear:both;
+        }
+    </style>
+
+    <script type="text/ecmascript" src="bubbleSort.js"></script>
+    <script type="text/javascript">
+        
+    </script>
+</head>
+<body>
+    <div>
+        <input type="hidden" id="Count" />
+        <input id="numberInput" type="text" value="11,22,333,90,101,9,10,55"/>
+        <input type="submit" value="ShowInput" onclick="javascript: showArrayContents();" />
+        <input type="submit" value="Sort using bubble sort" onclick="javascript: bubbleSort();" />
+        <input type="submit" value="Clear" onclick="javascript: clearContents();"/>
+    </div>
+
+    <div id="content">
+    </div>
+
+</body>
+</html>
