@@ -3,11 +3,13 @@
 	this.x = x;
 	this.y = y;
 
+	var width = 50;
+
 	this.text = new Kinetic.Text({
 		x : 0,
 		y : 0,
 		text : this.data,
-		// width : 60,
+		width : width,
 		fontSize : 24,
 		fontFamily : 'Calibri',
 		fill : '#555',
@@ -21,7 +23,7 @@
 		stroke : '#999',
 		strokeWidth : 2,
 		fill : '#eee',
-		width : this.text.getWidth(),
+		width : width,// this.text.getWidth(),
 		height : this.text.getHeight()
 	});
 
@@ -41,6 +43,10 @@ Element.prototype.getWidth = function() {
 	return this.rect.getWidth();
 }
 
+Element.prototype.getHeight = function() {
+	return this.rect.getHeight();
+}
+
 function ArrayAnimation(array, posX, posY) {
 	this.elements = [];
 	this.array = array || [ 3, 4, 6, 6, 8, -8, 0, 12, 2, 65, 7, 8, 9, 10 ];
@@ -50,24 +56,40 @@ function ArrayAnimation(array, posX, posY) {
 	this.stage = new Kinetic.Stage({
 		container : 'animation-wrapper',
 		width : 1000,
-		height : 300
+		height : 400
 	});
 
 	this.layer = new Kinetic.Layer();
 }
 
-ArrayAnimation.prototype.arrow = function(from, to, up) {
+ArrayAnimation.prototype.rightShift = function(index, n) {
+	var obj = this.elements[index].getCanvasObject();
+
+	var tween = new Kinetic.Tween({
+		node : obj,
+		easing : Kinetic.Easings["BounceEaseOut"],
+		duration : 0.5,
+		x : obj.getX() + this.elements[index].getWidth(),
+	});
+
+	setTimeout(function() {
+		tween.play();
+	}, 0);
+
+}
+
+ArrayAnimation.prototype.arrowUnder = function(from, to) {
 	var fromEl = this.elements[from];
 	var toEl = this.elements[to];
 	from = fromEl.getCanvasObject();
 	to = toEl.getCanvasObject();
 
 	var fromX = from.getX() + fromEl.getWidth() / 2;
-	var fromY = from.getY() - 10;
+	var fromY = from.getY() + fromEl.getHeight() + 30;
 	var toX = to.getX() + toEl.getWidth() / 2;
-	var toY = to.getY() - 10;
+	var toY = to.getY() + fromEl.getHeight() + 30;
 	var ctlX = (fromX + toX) / 2;
-	var ctlY = (fromY + toY) / 2 - 80;
+	var ctlY = (fromY + toY) / 2 + 80;
 
 	var spline = new Kinetic.Spline({
 		points : [ {
@@ -81,7 +103,45 @@ ArrayAnimation.prototype.arrow = function(from, to, up) {
 			x : toX,
 			y : toY
 		} ],
-		stroke : 'silver',
+		stroke : '#5bc0de',
+		strokeWidth : 2,
+		lineCap : 'round',
+		tension : 1
+	});
+
+	this.layer.add(spline);
+
+	canvas_arrow(toX, toY, -Math.PI / 2, this.layer);
+	this.layer.draw();
+
+}
+
+ArrayAnimation.prototype.arrowOver = function(from, to) {
+	var diff = from - to;
+	var fromEl = this.elements[from];
+	var toEl = this.elements[to];
+	from = fromEl.getCanvasObject();
+	to = toEl.getCanvasObject();
+
+	var fromX = from.getX() + fromEl.getWidth() / 2;
+	var fromY = from.getY() - 30;
+	var toX = to.getX() + toEl.getWidth() / 2;
+	var toY = to.getY() - 30;
+	var ctlX = (fromX + toX) / 2;
+	var ctlY = (fromY + toY) / 2 - 80;
+
+	var spline = new Kinetic.Spline({
+		points : [ {
+			x : fromX,
+			y : fromY
+		}, {
+			x : ctlX,
+			y : ctlY
+		}, {
+			x : toX,
+			y : toY
+		} ],
+		stroke : '#5bc0de',
 		strokeWidth : 2,
 		lineCap : 'round',
 		tension : 1
@@ -101,12 +161,47 @@ function canvas_arrow(tox, toy, angle, layer) {
 				toy - headlen * Math.sin(angle - Math.PI / 6), tox, toy,
 				tox - headlen * Math.cos(angle + Math.PI / 6),
 				toy - headlen * Math.sin(angle + Math.PI / 6) ],
-		stroke : "silver"
+		stroke : "#5bc0de"
 	});
 	layer.add(line);
 }
 
 ArrayAnimation.prototype.swap = function(a, b) {
+	// highlight
+	this.highlight(a);
+	this.highlight(b);
+	this.popup(a);
+	this.popdown(b);
+
+	this.arrowOver(a, b);
+	this.arrowUnder(b, a);
+
+	// swap animation
+	var objA = this.elements[a].getCanvasObject();
+	var objB = this.elements[b].getCanvasObject();
+
+	var tween1 = new Kinetic.Tween({
+		node : objA,
+		easing : Kinetic.Easings["BounceEaseOut"],
+		duration : 1,
+		x : objB.getX(),
+		y : objB.getY() - 20
+	});
+
+	var tween2 = new Kinetic.Tween({
+		node : objB,
+		easing : Kinetic.Easings["BounceEaseOut"],
+		duration : 1,
+		x : objA.getX(),
+		y : objA.getY() + 20
+	});
+
+	setTimeout(function() {
+		tween1.play();
+		tween2.play();
+	}, 0);
+
+	return;
 	var that = this;
 	var obj = that.elements[a].getCanvasObject();
 	obj.setY(obj.getPosition().y - 10);
@@ -128,9 +223,25 @@ ArrayAnimation.prototype.highlight = function(i) {
 	this.layer.draw();
 }
 
+ArrayAnimation.prototype.popdown = function(index) {
+	var obj = this.elements[index].getCanvasObject();
+
+	var tween = new Kinetic.Tween({
+		node : obj,
+		easing : Kinetic.Easings["BounceEaseOut"],
+		duration : .4,
+		x : obj.getX(),
+		y : obj.getY() + 20
+	});
+
+	setTimeout(function() {
+		tween.play();
+	}, 0);
+}
+
 ArrayAnimation.prototype.popup = function(index) {
-	var that = this;
-	var obj = that.elements[index].getCanvasObject();
+
+	var obj = this.elements[index].getCanvasObject();
 
 	var tween = new Kinetic.Tween({
 		node : obj,
@@ -140,8 +251,6 @@ ArrayAnimation.prototype.popup = function(index) {
 		y : obj.getY() - 20
 	});
 
-	// obj.setY(obj.getPosition().y - 10);
-	// this.layer.draw();
 	setTimeout(function() {
 		tween.play();
 	}, 0);
@@ -168,11 +277,12 @@ ArrayAnimation.prototype.showArray = function() {
 	this.stage.add(this.layer);
 }
 
-
 // test code
-var a = new ArrayAnimation(null, 10, 100);
+var a = new ArrayAnimation(null, 80, 200);
 a.showArray();
-a.swap(3, 1);
-a.highlight(3);
-a.arrow(10, 1);
-a.popup(7);
+a.rightShift(3);
+// a.swap(1, 12);
+// a.highlight(3);
+// a.arrow(10, 1);
+// a.popup(7);
+
