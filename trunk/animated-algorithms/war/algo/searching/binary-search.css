@@ -1,0 +1,119 @@
+/* body {
+	font-family: Calibri, "Segoe UI", Verdana, Arial;
+	border: 1px solid silver;
+}
+ */
+#infoSection {
+	font-size: 24px;
+	line-height: 24px;
+	text-align: center;
+	height: 120px;
+}
+
+#content {
+	position: relative;
+	min-height: 400px;
+}
+
+.abs-num {
+	margin: 5px;
+	min-width: 75px;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 40px;
+	height: 40px;
+	border: 1px solid grey;
+	position: absolute;
+	box-shadow: 2px 2px 2px #888888;
+}
+
+.not-active {
+	opacity: 0.1;
+}
+
+.found {
+	background-color: #4cff00;
+}
+
+.not-found {
+	background-color: #ff0000;
+}
+
+.swapped {
+	border: 2px solid red;
+}
+
+.compared {
+	margin: 5px;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 40px;
+	height: 40px;
+	border: 1px solid #558e1d;
+	background-color: #ffd800;
+	position: absolute;
+}
+
+.mainArray {
+	float: none;
+	clear: both;
+}
+
+.header {
+	vertical-align: middle;
+	line-height: 40px;
+	margin: 5px;
+	width: 120px;
+	position: absolute;
+}
+
+.fixed-header {
+	float: left;
+	vertical-align: middle;
+	line-height: 40px;
+	margin: 5px;
+	width: 120px;
+	margin-left: 100px;
+}
+
+.label {
+	width: 200px;
+}
+
+.input-section {
+	padding: 10px;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid silver;
+	background-color: #E8E8E8;
+	box-shadow: 5px 8px 10px #888888;
+}
+
+.input {
+	width: 500px;
+	height: 25px;
+	font-size: 15px;
+	padding-left: 3px;
+}
+
+.button {
+	width: 180px;
+	height: 30px;
+	font-size: 15px;
+	margin-left: 10px;
+}
+
+.array-index {
+	top: 30px;
+	position: absolute;
+	left: 30px;
+	color: grey;
+}
+
+.info-section-container {
+	position: absolute;
+	top: 350px;
+	left: 300px;
+	display: none;
+	font-size: x-large;
+	text-align: center;
+}

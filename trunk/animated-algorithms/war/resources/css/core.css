@@ -1,5 +1,17 @@
+html, body{
+	height: 100%;
+}
+
 #dry-run {
 	position: relative;
+}
+
+#code {
+	padding: 10px;
+}
+
+#dry-run-table-wrapper {
+	padding: 10px;
 }
 
 #dry-run-table-wrapper .table {
