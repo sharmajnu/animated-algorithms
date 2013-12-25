@@ -1,0 +1,75 @@
+        .body
+        {
+            font-family:Calibri;
+        }
+        .num
+        {
+            margin: 5px;
+            min-width: 70px;
+            float: left;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid silver;
+            background-color: #4cff00;
+        }
+
+        .abs-num {
+            margin: 5px;
+            min-width: 70px;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid silver;
+            background-color: #4cff00;
+            position: absolute;
+        }
+
+        .swapped {
+            margin: 5px;
+            min-width: 70px;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid silver;
+            background-color: #4cff00;
+            position: absolute;
+            background-color: #f00;
+        }
+
+        .mainArray
+        {
+            float: none;
+            clear:both;
+        }
+
+        .header 
+        {
+            vertical-align: middle;
+            line-height: 40px;
+            margin: 5px;
+            width: 120px;
+            position: absolute;
+        }
+
+        .fixed-header {
+            float: left;
+            vertical-align: middle;
+            line-height: 40px;
+            margin: 5px;
+            width: 120px;
+            margin-left: 100px;
+        }
+
+        .play-button {
+            
+            vertical-align: middle;
+            line-height: 34px;
+            margin: 5px;
+            width: 80px;
+            position: absolute;
+            height: 40px;
+        }

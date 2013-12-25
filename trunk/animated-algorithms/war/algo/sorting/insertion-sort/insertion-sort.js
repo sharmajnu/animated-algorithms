@@ -1,288 +1,186 @@
-﻿function Element(data, x, y) {
-	this.data = data;
-	this.x = x;
-	this.y = y;
+﻿
+function clearContents() {
+    var mainDiv = document.getElementById('content');
+    mainDiv.innerHTML = "";
 
-	var width = 50;
-
-	this.text = new Kinetic.Text({
-		x : 0,
-		y : 0,
-		text : this.data,
-		width : width,
-		fontSize : 24,
-		fontFamily : 'Calibri',
-		fill : '#555',
-		padding : 10,
-		align : 'center'
-	});
-
-	this.rect = new Kinetic.Rect({
-		x : 0,
-		y : 0,
-		stroke : '#999',
-		strokeWidth : 2,
-		fill : '#eee',
-		width : width,// this.text.getWidth(),
-		height : this.text.getHeight()
-	});
-
-	this.group = new Kinetic.Group({
-		x : this.x,
-		y : this.y
-	});
-	this.group.add(this.rect);
-	this.group.add(this.text);
+    showArrayContents();
+    bubbleSort();
 }
 
-Element.prototype.getCanvasObject = function() {
-	return this.group;
+var inputArray;
+var passesArrays;
+
+function parseArray() {
+    inputArray = [];
+    var input = document.getElementById('numberInput');
+    var items = input.value.split(',');
+    for (var i in items)
+        inputArray.push(items[i]);
 }
 
-Element.prototype.getWidth = function() {
-	return this.rect.getWidth();
+function showArrayContents() {
+
+    parseArray();
+    generateArrayContents("Input Array:");
 }
 
-Element.prototype.getHeight = function() {
-	return this.rect.getHeight();
-}
+var top1 = 150;
+var left = 100;
 
-function ArrayAnimation(array, posX, posY) {
-	this.elements = [];
-	this.array = array || [ 3, 4, 6, 6, 8, -8, 0, 12, 2, 65, 7, 8, 9, 10 ];
-	this.posX = posX || 0;
-	this.posY = posY || 0;
+function generateArrayContentsForPass(number) {
+    var mainContent = document.getElementById('content');
 
-	this.stage = new Kinetic.Stage({
-		container : 'animation-wrapper',
-		width : 1000,
-		height : 400
-	});
+    var inputArrayHtml = "<div class='mainArray' id='ArrayContents" + number + "'>";
 
-	this.layer = new Kinetic.Layer();
-}
+    var label;
+    if (!number)
+        label = "Input Array";
+    else
+        label = "Pass: " + number;
 
-ArrayAnimation.prototype.rightShift = function(index, n) {
-	var obj = this.elements[index].getCanvasObject();
+    var rowTop = top1 + number * 50;
+    var inlineStyleForSpan = "\"left: " + left + "px; top: " + parseInt(rowTop) + "px\"";
 
-	var tween = new Kinetic.Tween({
-		node : obj,
-		easing : Kinetic.Easings["BounceEaseOut"],
-		duration : 0.5,
-		x : obj.getX() + this.elements[index].getWidth(),
-	});
+    inputArrayHtml += "<span class=\"header\" style=" + inlineStyleForSpan + ">" + label + "</span>";
 
-	setTimeout(function() {
-		tween.play();
-	}, 0);
+    
+    var leftPos;
+    for (var i in inputArray) {
+        var id = "div" + number + "-" + i;
+        leftPos = left + i * 80 + 120;
+
+        var inlineStyle = "\"left: " + leftPos + "px; top: " + rowTop + "px\"";
+        inputArrayHtml += "<div id='" + id + "' class='abs-num' style=" + inlineStyle + ">" + inputArray[i] + "</div>";
+    }
+
+    var leftPosForButton = leftPos + 80;
+    var inlineStyleForButton = "\"left: " + leftPosForButton + "px; top: " + rowTop + "px\"";
+    mainContent.innerHTML += inputArrayHtml;
+    mainContent.innerHTML += "<input type=\"hidden\" id=\"playbutton-" + number + "-row\" value=\"" +number+ "\" />";
+    mainContent.innerHTML += "<input id='playbutton-"+ number +"' class=\"play-button\" type=\"submit\" value=\"Play\" onclick=\"javascript:sortPass(this);\" style=" + inlineStyleForButton + "/>" + "</div>";
 
 }
 
-ArrayAnimation.prototype.arrowUnder = function(from, to) {
-	var fromEl = this.elements[from];
-	var toEl = this.elements[to];
-	from = fromEl.getCanvasObject();
-	to = toEl.getCanvasObject();
+function sortPass(sender)
+{
+    var rowNumberId = sender.id + "-row";
+    var rowNumberControl = document.getElementById(rowNumberId);
 
-	var fromX = from.getX() + fromEl.getWidth() / 2;
-	var fromY = from.getY() + fromEl.getHeight() + 30;
-	var toX = to.getX() + toEl.getWidth() / 2;
-	var toY = to.getY() + fromEl.getHeight() + 30;
-	var ctlX = (fromX + toX) / 2;
-	var ctlY = (fromY + toY) / 2 + 80;
+    if (rowNumberControl) {
+        runBubbleSortPass(rowNumberControl.value);
+    }
+    else
+        alert('rowNumberControl is null');
 
-	var spline = new Kinetic.Spline({
-		points : [ {
-			x : fromX,
-			y : fromY
-		}, {
-			x : ctlX,
-			y : ctlY
-		// modify this 50 to something that makes it round
-		}, {
-			x : toX,
-			y : toY
-		} ],
-		stroke : '#5bc0de',
-		strokeWidth : 2,
-		lineCap : 'round',
-		tension : 1
-	});
-
-	this.layer.add(spline);
-
-	canvas_arrow(toX, toY, -Math.PI / 2, this.layer);
-	this.layer.draw();
 
 }
 
-ArrayAnimation.prototype.arrowOver = function(from, to) {
-	var diff = from - to;
-	var fromEl = this.elements[from];
-	var toEl = this.elements[to];
-	from = fromEl.getCanvasObject();
-	to = toEl.getCanvasObject();
+var currentElementDivForPass;
+function runBubbleSortPass(number)
+{
+    
+    var currentArray = passesArrays[number-1];
+    var divArray = [];
+    for (var i in currentArray)
+    {
+        var divId = "div" + number + "-" + i;
+        divArray.push(divId);
+    }
+    var currentElementDiv = divArray[number];
+    currentElementDivForPass = currentElementDiv;
 
-	var fromX = from.getX() + fromEl.getWidth() / 2;
-	var fromY = from.getY() - 30;
-	var toX = to.getX() + toEl.getWidth() / 2;
-	var toY = to.getY() - 30;
-	var ctlX = (fromX + toX) / 2;
-	var ctlY = (fromY + toY) / 2 - 80;
+    $("#" + currentElementDiv).addClass("swapped");
 
-	var spline = new Kinetic.Spline({
-		points : [ {
-			x : fromX,
-			y : fromY
-		}, {
-			x : ctlX,
-			y : ctlY
-		}, {
-			x : toX,
-			y : toY
-		} ],
-		stroke : '#5bc0de',
-		strokeWidth : 2,
-		lineCap : 'round',
-		tension : 1
-	});
+    moveUp(currentElementDiv)
+    var j = number - 1;
+    var temp = currentArray[number];
+    var tempDiv = divArray[number];
 
-	this.layer.add(spline);
+    var count = 0;
+    while (parseInt(currentArray[j]) > parseInt(temp) && j >= 0)
+    {
+        currentArray[j + 1] = currentArray[j];
+        moveRight(divArray[j]);
+        divArray[j + 1] = divArray[j];
+        j--;
+        count++;
+        
+    }
 
-	canvas_arrow(toX, toY, Math.PI / 2, this.layer);
-	this.layer.draw();
+    currentArray[j + 1] = temp;
+    divArray[j + 1] = tempDiv;
+
+    moveLeft(currentElementDiv, count);
+    moveDown(currentElementDiv);
 }
 
-function canvas_arrow(tox, toy, angle, layer) {
-	var headlen = 20;
-
-	line = new Kinetic.Line({
-		points : [ tox - headlen * Math.cos(angle - Math.PI / 6),
-				toy - headlen * Math.sin(angle - Math.PI / 6), tox, toy,
-				tox - headlen * Math.cos(angle + Math.PI / 6),
-				toy - headlen * Math.sin(angle + Math.PI / 6) ],
-		stroke : "#5bc0de"
-	});
-	layer.add(line);
+function changeColor(element)
+{
+    $("#" + element).animate({ backgroundColor: "red" }, "fast");
+}
+function moveLeft(element, count)
+{
+    var left = 80 * parseInt(count);
+    $("#" + element).animate({ "left": "-="+ left + "px" }, { duration: 500 * count });
+}
+function moveRight(element)
+{
+    $("#" + element).animate({ "left": "+=80px" }, { duration: 1000 });
 }
 
-ArrayAnimation.prototype.swap = function(a, b) {
-	// highlight
-	this.highlight(a);
-	this.highlight(b);
-	this.popup(a);
-	this.popdown(b);
-
-	this.arrowOver(a, b);
-	this.arrowUnder(b, a);
-
-	// swap animation
-	var objA = this.elements[a].getCanvasObject();
-	var objB = this.elements[b].getCanvasObject();
-
-	var tween1 = new Kinetic.Tween({
-		node : objA,
-		easing : Kinetic.Easings["BounceEaseOut"],
-		duration : 1,
-		x : objB.getX(),
-		y : objB.getY() - 20
-	});
-
-	var tween2 = new Kinetic.Tween({
-		node : objB,
-		easing : Kinetic.Easings["BounceEaseOut"],
-		duration : 1,
-		x : objA.getX(),
-		y : objA.getY() + 20
-	});
-
-	setTimeout(function() {
-		tween1.play();
-		tween2.play();
-	}, 0);
-
-	return;
-	var that = this;
-	var obj = that.elements[a].getCanvasObject();
-	obj.setY(obj.getPosition().y - 10);
-	return;
-
-	var anim = new Kinetic.Animation(function(frame) {
-		var time = frame.time;
-		var timeDiff = frame.timeDiff;
-		var frameRate = frame.frameRate;
-		var obj = that.elements[a].getCanvasObject();
-		obj.setY(obj.getPosition().y - 10);
-	}, this.layer);
-	anim.start();
+function moveUp(element)
+{
+    $("#" + element).animate({ "top": "-=50px" }, { duration: 1000 });
 }
 
-ArrayAnimation.prototype.highlight = function(i) {
-	this.elements[i].rect.setFill("#5bc0de");
-	this.elements[i].text.setStroke("#FFFFFF");
-	this.layer.draw();
+function moveDown(element)
+{
+    $("#" + element).animate({ "top": "+=50px" },
+                                {
+                                    duration: 1000,
+                                    complete: function ()
+                                    {
+                                        //alert(element);
+                                        $("#" + element).removeClass("swapped");
+                                    }
+                                });
 }
 
-ArrayAnimation.prototype.popdown = function(index) {
-	var obj = this.elements[index].getCanvasObject();
+function generateArrayContents(message) {
+    var mainContent = document.getElementById('content');
 
-	var tween = new Kinetic.Tween({
-		node : obj,
-		easing : Kinetic.Easings["BounceEaseOut"],
-		duration : .4,
-		x : obj.getX(),
-		y : obj.getY() + 20
-	});
+    var inputArrayHtml = "<div class='mainArray' id='ArrayContents'>";
+    inputArrayHtml += "<span class=\"fixed-header\">" + message + "</span>";
 
-	setTimeout(function() {
-		tween.play();
-	}, 0);
+    for (var i in inputArray) {
+        var id = "inputdiv" + "-" + i;
+        inputArrayHtml += "<div id=" + id + " class='num'>" + inputArray[i] + "</div>";
+    }
+
+
+    mainContent.innerHTML += inputArrayHtml + "</div>";
 }
 
-ArrayAnimation.prototype.popup = function(index) {
 
-	var obj = this.elements[index].getCanvasObject();
+function bubbleSort()
+{
+    passesArrays = [];
+    for (var i = 1; i < inputArray.length; i++)
+    {
+        passesArrays.push(inputArray.slice(0))
+        generateArrayContentsForPass(i);
 
-	var tween = new Kinetic.Tween({
-		node : obj,
-		easing : Kinetic.Easings["BounceEaseOut"],
-		duration : .4,
-		x : obj.getX(),
-		y : obj.getY() - 20
-	});
+        
+        var temp = inputArray[i];
+        var j = i - 1;
+        while (parseInt(inputArray[j] )> parseInt(temp) && j >= 0)
+        {
+            inputArray[j + 1] = inputArray[j];
+            j--;
+        }
+        inputArray[j + 1] = temp;
+        
+    }
 
-	setTimeout(function() {
-		tween.play();
-	}, 0);
+    generateArrayContents("Final Array");
 }
-
-ArrayAnimation.prototype.showArray = function() {
-	var x, y;
-	for (var i = 0; i < this.array.length; i++) {
-		if (i > 0) {
-			var group = this.elements[i - 1].getCanvasObject();
-			var pos = group.getAbsolutePosition();
-			x = pos.x + this.elements[i - 1].getWidth();// + 10;
-			y = pos.y;
-		} else {
-			x = this.posX;
-			y = this.posY;
-		}
-		this.elements.push(new Element(this.array[i], x, y));
-
-		// add the shapes to the layer
-		this.layer.add(this.elements[i].getCanvasObject());
-	}
-
-	this.stage.add(this.layer);
-}
-
-// test code
-var a = new ArrayAnimation(null, 80, 200);
-a.showArray();
-a.rightShift(3);
-// a.swap(1, 12);
-// a.highlight(3);
-// a.arrow(10, 1);
-// a.popup(7);
-

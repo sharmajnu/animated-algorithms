@@ -1,0 +1,31 @@
+#dry-run {
+	position: relative;
+}
+
+#dry-run-table-wrapper .table {
+	margin-bottom: 0;
+}
+
+#dry-run-table-wrapper .table-row {
+	padding: 5px;
+}
+
+#dry-run-table-wrapper .table-row:hover {
+	background-color: honeydew;
+	border-right: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border-radius: 5px;
+	border: 1px solid silver;
+}
+
+#animation-wrapper {
+	border: 1px solid silver;
+	border-radius: 5px;
+}
+
+#dry-run-table-wrapper .table-row.selected {
+	box-shadow: 0 0 5px silver;
+	border-radius: 5px;
+	border: 1px solid silver;
+}
