@@ -4,8 +4,14 @@
 <title>Animated Algorithms</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/core.css" rel="stylesheet">
+
 <style type="text/css">
-	@IMPORT url("/resources/css/core.css");
+table td {
+	vertical-align: top;
+	padding: 0;
+}
+
 table.table {
 	width: auto;
 	border-top: 1px solid #efefef;
@@ -49,7 +55,7 @@ table.table tr td .element.highlight {
 	<div style="margin: 5px 30px">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2>Name of the Algorithm</h2>
+				<h2>Quicksort</h2>
 			</div>
 			<div class="panel-body">
 
@@ -73,7 +79,7 @@ table.table tr td .element.highlight {
 								<tr>
 									<td>
 										<div class="input-group">
-											<span class="input-group-addon">[ ]</span>
+											<span class="input-group-addon">[,]</span>
 											<input id="array-data" type="text" class="form-control"
 												placeholder="Comma(,) Separated Values"
 												value="2,3,4,56,12,24,6,67,22,10">
@@ -87,8 +93,16 @@ table.table tr td .element.highlight {
 							</table>
 
 						</div>
-
-						<div id="dry-run-table-wrapper"></div>
+						<table>
+							<tr>
+								<td>
+									<div id="dry-run-table-wrapper"></div>
+								</td>
+								<td>
+									<div id="animation-wrapper"></div>
+								</td>
+							</tr>
+						</table>
 					</div>
 					<div class="tab-pane" id="properties">2</div>
 					<div class="tab-pane" id="code">3</div>
@@ -99,5 +113,6 @@ table.table tr td .element.highlight {
 	<script src="/resources/js/jquery-2.0.3.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/resources/js/core.js"></script>
+	<script type="text/javascript" src="quicksort.js"></script>
 </body>
 </html>

@@ -1,23 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<title>Insertion Sort</title>
+<title>Insertion Sort Animated Algorithms</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
-#animation-wrapper {
-	height: 400px;
-	width: 1000px;
-	border:1px solid silver;
-	margin: auto;
+@IMPORT url("/resources/css/core.css");
+@IMPORT url("insertion-sort.css");
+
+table.table {
+	width: auto;
+	border-top: 1px solid #efefef;
+	border-left: 1px solid #efefef;
+}
+
+table.table tr td {
+	border-right: 1px solid #efefef;
+	border-bottom: 1px solid #efefef;
+}
+
+table.table tr td .element {
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	font-weight: bold;
+	border-radius: 50%;
+	margin: 2px 5px;
+	background-color: red;
+	text-align: center;
+	background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, silver 0%, white
+		100%, white 95%);
+	background-image: -webkit-radial-gradient(45px 45px, circle cover, silver, white);
+	background-image: radial-gradient(45px 45px 45deg, circle cover, silver 0%, white 100%,
+		white 95%);
+	box-shadow: 0 0 3px silver;
+}
+
+table.table tr td .element.highlight {
+	background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, yellow 0%, white
+		100%, white 95%);
+	background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, white);
+	background-image: radial-gradient(45px 45px 45deg, circle cover, yellow 0%, white 100%,
+		white 95%);
+	box-shadow: 0 0 8px orange;
 }
 </style>
-<script type="text/javascript"
-	src="/resources/js/kinetic-v4.7.4.js"></script>
 </head>
 <body>
-	<div id="animation-wrapper"></div>
+	<div style="margin: 5px 30px">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>Insertion Sort</h2>
+			</div>
+			<div class="panel-body">
+
+				<!-- Tabs -->
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active">
+						<a href="#dry-run" data-toggle="tab">Dry Run</a>
+					</li>
+					<li>
+						<a href="#properties" data-toggle="tab">Properties</a>
+					</li>
+					<li>
+						<a href="#code" data-toggle="tab">Code</a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="dry-run">
+						<div class="input-wrapper" style="padding: 5px 0; margin: 5px 0;">
+							<table style="width: 100%">
+								<tr>
+									<td>
+										<div class="input-group">
+											<span class="input-group-addon">[ ]</span>
+											<input id="array-data" type="text" class="form-control"
+												placeholder="Comma(,) Separated Values"
+												value="2,3,4,56,12,24,6,67,22,10">
+										</div>
+									</td>
+									<td>
+										<button id="run" type="button" class="btn btn-success"
+											data-toggle="button">Run</button>
+									</td>
+								</tr>
+							</table>
+
+						</div>
+						<div>
+							<input id="numberInput" type="text" value="8,7,6,5,4,3,2,1" />
+							<input type="submit" value="Reset"
+								onclick="javascript: clearContents();" />
+						</div>
+
+						<div id="content"></div>
+
+						<!-- 						<div id="dry-run-table-wrapper"></div> -->
+					</div>
+					<div class="tab-pane" id="properties">2</div>
+					<div class="tab-pane" id="code">3</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/resources/js/jquery-2.0.3.min.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/resources/js/core.js"></script>
+	<script type="text/javascript" src="insertion-sort.js"></script>
 </body>
-<script defer="defer" src="insertion-sort.js">
-	
-</script>
 </html>
+
+
