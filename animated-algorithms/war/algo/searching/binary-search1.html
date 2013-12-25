@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Binary Search</title>
+    <style type="text/css">
+    @IMPORT url("binary-search.css");
+
+    </style>
+
+    <script src="/resources/js/jquery-2.0.3.min.js"></script>
+    <script src="/resources/js/queue.js"></script>
+
+    <script type="text/ecmascript" src="binary-search.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <div>
+        <div class="input-section">
+            <table>
+                <tr>
+                    <td><span class="label">Array</span></td>
+                    <td><input class="input" id="numberInput" type="text" value="1,5,33,45,90,99,100,109,110" /></td>
+                </tr>
+                <tr>
+                    <td><span class="label">Number to find</span></td>
+                    <td>
+                        <input id="searchNumber" value="99" class="input" />
+                        <input type="submit" value="Do Binary Search" onclick="javascript: showArrayContents();" class="button" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <div id="content">
+            </div>
+            <div id="infoSectionContainer" class="info-section-container">
+                    <div id="infoSection" style="height: 130px; width: 400px; "></div>
+            </div>
+        </div>
+        <div style="position:relative; float:left; margin-top:10px; height:500px; width:450px; background-color: white; border: 1px solid silver; box-shadow: 0px 0px 30px silver">
+            <div style="height:30px; width: 100%; background-color: grey; text-align: center; line-height: 30px; color:white; font-weight: bold">Binary Search Algorithm</div>
+            <div>
+                <p style="padding-left: 20px;">
+                    int binarySearch(int[] array, int number)
+                    <br/>{
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start = 0;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = array.length - 1;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(start <= end) 
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br />      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mid = start + (end-start)/2;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(array[mid] == number)  
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return mid;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(number < array[mid])
+                    <br />       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = mid - 1;
+                    <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else 
+                    <br />       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start = mid + 1;
+                    <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;
+                    <br />}<br />
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

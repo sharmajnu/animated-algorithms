@@ -13,9 +13,9 @@ window.onload = function() {
 		$(this).addClass("selected");
 	});
 
-	$("#run").click(Sort.run());
+	$("#run").click(Sort.run);
 
-	Sort.run();
+//	Sort.run();
 };
 
 function highlightRange(table, left, right) {
