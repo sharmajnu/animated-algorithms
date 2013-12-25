@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Binary Search</title>
+    <style>
+        body {
+            font-family: Calibri,"Segoe UI", Verdana, Arial;
+            border: 1px solid silver;
+        }
+
+
+
+        .abs-num {
+            margin: 5px;
+            min-width: 75px;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid grey;
+            position: absolute;
+            box-shadow: 2px 2px 2px #888888;
+        }
+
+        .not-active
+        {
+            opacity: 0.1;
+        }
+        .found {
+            background-color: #4cff00;
+        }
+
+        .not-found {
+            background-color: #ff0000;
+        }
+
+        .swapped {
+            border: 2px solid red;
+        }
+
+        .compared {
+            margin: 5px;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid #558e1d;
+            background-color: #ffd800;
+            position: absolute;
+        }
+
+        .mainArray {
+            float: none;
+            clear: both;
+        }
+
+        .header {
+            vertical-align: middle;
+            line-height: 40px;
+            margin: 5px;
+            width: 120px;
+            position: absolute;
+        }
+
+        .fixed-header {
+            float: left;
+            vertical-align: middle;
+            line-height: 40px;
+            margin: 5px;
+            width: 120px;
+            margin-left: 100px;
+        }
+
+        .label {
+            width: 200px;
+        }
+
+        .input-section {
+            padding: 10px;
+            border-right: 1px solid silver;
+            border-bottom: 1px solid silver;
+            background-color: #E8E8E8;
+            box-shadow: 5px 8px 10px #888888;
+        }
+
+        .input {
+            width: 500px;
+            height: 25px;
+            font-size: 15px;
+            padding-left: 3px;
+        }
+
+        .button {
+            width: 180px;
+            height: 30px;
+            font-size: 15px;
+            margin-left:10px;
+        }
+
+        .array-index
+        {
+            top: 30px;
+            position: absolute;
+            left: 30px;
+            color: grey;
+        }
+
+        .info-section-container {
+            position: absolute;
+            top: 350px;
+            left: 300px;
+            display: none;
+            font-size: x-large;
+            text-align: center;
+        }
+    </style>
+
+    <script src="/resources/js/jquery-2.0.3.min.js"></script>
+    <script src="/resources/js/queue.js"></script>
+
+    <script type="text/ecmascript" src="binary-search.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <div>
+        <div class="input-section">
+            <table>
+                <tr>
+                    <td><span class="label">Array</span></td>
+                    <td><input class="input" id="numberInput" type="text" value="1,5,33,45,90,99,100,109,110" /></td>
+                </tr>
+                <tr>
+                    <td><span class="label">Number to find</span></td>
+                    <td>
+                        <input id="searchNumber" value="99" class="input" />
+                        <input type="submit" value="Do Binary Search" onclick="javascript: showArrayContents();" class="button" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <div id="content">
+            </div>
+            <div id="infoSectionContainer" class="info-section-container">
+                    <div id="infoSection" style="height: 130px; width: 400px; "></div>
+            </div>
+        </div>
+        <div style="position:relative; float:left; margin-top:10px; height:500px; width:450px; background-color: white; border: 1px solid silver; box-shadow: 0px 0px 30px silver">
+            <div style="height:30px; width: 100%; background-color: grey; text-align: center; line-height: 30px; color:white; font-weight: bold">Binary Search Algorithm</div>
+            <div>
+                <p style="padding-left: 20px;">
+                    int binarySearch(int[] array, int number)
+                    <br/>{
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start = 0;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = array.length - 1;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(start <= end) 
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br />      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mid = start + (end-start)/2;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(array[mid] == number)  
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      return mid;
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(number < array[mid])
+                    <br />       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end = mid - 1;
+                    <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else 
+                    <br />       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start = mid + 1;
+                    <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;
+                    <br />}<br />
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
